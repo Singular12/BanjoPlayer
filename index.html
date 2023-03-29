@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Banjo Strings</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			background-image: url('banjo-background.jpg');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		.key {
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin: 10px;
+			padding: 10px;
+			text-align: center;
+			width: 50px;
+			height: 50px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			font-size: 16px;
+			font-weight: bold;
+			cursor: pointer;
+			background-color: #f0f0f0;
+			box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+			animation: jiggle 0.5s ease;
+		}
+
+		.key:hover {
+			background-color: #e0e0e0;
+		}
+
+		.key:active {
+			background-color: #d0d0d0;
+			box-shadow: none;
+		}
+
+		@keyframes jiggle {
+			0% {
+				transform: rotate(0deg);
+			}
+			25% {
+				transform: rotate(5deg);
+			}
+			50% {
+				transform: rotate(-5deg);
+			}
+			75% {
+				transform: rotate(3deg);
+			}
+			100% {
+				transform: rotate(0deg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="key" id="key1">1</div>
+		<div class="key" id="key2">2</div>
+		<div class="key" id="key3">3</div>
+		<div class="key" id="key4">4</div>
+		<div class="key" id="key5">5</div>
+		<div class="key" id="key6">6</div>
+	</div>
+
+	<script>
+		// Define banjo strings audio sources
+		const banjoSounds = {
+			'key1': new Audio('banjo1.mp3'),
+			'key2': new Audio('banjo2.mp3'),
+			'key3': new Audio('banjo3.mp3'),
+			'key4': new Audio('banjo4.mp3'),
+			'key5': new Audio('banjo5.mp3'),
+			'key6': new Audio('banjo6.mp3')
+		};
+
+		// Function to play banjo string audio and animate key
+		function playBanjoString(key) {
+			const audio = banjoSounds[key];
+			if (audio) {
+				audio.currentTime = 0;
+				audio.play();
+				const element = document.getElementById(key);
+				element.classList.add('jiggle');
+				setTimeout(function() {
+					element.classList.remove('jiggle');
+				}, 500);
+			}
+		}
+
+		// Event listener for click event on keys
+		const keys = document.querySelectorAll('.key');
+	keys.forEach(key => {
+			key.addEventListener('click', function() {
+				playBanjoString(key.id);
+			});
+		});
+
+		// Event listener for keydown event
+		document.addEventListener('keydown', function(event) {
+			playBanjoString('key' + event.key);
+		});
+	</script>
+</body>
+</html>
